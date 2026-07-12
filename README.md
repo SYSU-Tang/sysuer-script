@@ -33,8 +33,12 @@
 请确保你的浏览器（Chrome / Edge / Firefox 等）已安装 **[Tampermonkey (油猴)](https://www.tampermonkey.net/)** 扩展。
 
 ### 2. 安装本脚本
-[Greasyfork](https://update.greasyfork.org/scripts/586712/SYSUER%E7%BE%8E%E5%8C%96%E8%BE%85%E5%8A%A9%E5%A2%9E%E5%BC%BA.user.js)。
-[Github](https://github.com/SYSU-Tang/sysuer-script/raw/refs/heads/main/sysuer.user.js)。
+
+点击其中之一安装脚本
+
+[Greasyfork](https://update.greasyfork.org/scripts/586712/SYSUER%E7%BE%8E%E5%8C%96%E8%BE%85%E5%8A%A9%E5%A2%9E%E5%BC%BA.user.js)
+
+[Github](https://github.com/SYSU-Tang/sysuer-script/raw/refs/heads/main/sysuer.user.js)
 
 ### 3. 初始配置
 1. 访问任意受支持的中大网站（如教务系统或门户）。
