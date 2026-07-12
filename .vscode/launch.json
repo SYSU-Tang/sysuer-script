@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "chrome",
+            "webRoot": "${workspaceFolder}",
+            "name": "Bing",
+            "request": "launch",
+            "url": "http://www.bing.com"
+        }
+    ]
+}

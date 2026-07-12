@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"uri": "vscode-vfs://github/SYSU-Tang/sysuer-script"
+		},
+		{
+			"name": "sysuer-script",
+			"path": "."
+		}
+	],
+	"settings": {}
+}
