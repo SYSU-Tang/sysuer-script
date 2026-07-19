@@ -6,8 +6,8 @@
 // @author       SYSU-Tang
 // @license      Apache-2.0
 // @updateURL    https://github.com/SYSU-Tang/sysuer.user.js/raw/main/sysuer.meta.js
-// @downloadURL  https://github.com/SYSU-Tang/sysuer.user.js/raw/main/sysuer.user.js
-// @homepage     https://github.com/SYSU-Tang/sysuer.user.js
+// @downloadURL  https://github.com/SYSU-Tang/sysuer-script/raw/refs/heads/main/sysuer.user.js
+// @homepage     https://github.com/SYSU-Tang/sysuer-script
 // @match        *://www.sysu.edu.cn/*
 // @match        *://jwxt.sysu.edu.cn/*
 // @match        *://portal.sysu.edu.cn/*
@@ -471,7 +471,7 @@
                         }
                     } else {
                         let count = 0;
-                        const total = Math.floor((totaltime - duration) / 4) + 1;
+                        const total = Math.floor((totaltime - duration) / 4);
                         const intervalId = setInterval(() => {
                             playerWrapper.viewTotalTime = 4000;
                             playerWrapper.ajaxOrder();
@@ -563,7 +563,7 @@
         const clickButton = {
             'jwxt.sysu.edu.cn/jwxt/#/login': 'button.ant-btn.ant-btn-primary',
             'jwxt.sysu.edu.cn': '.ant-confirm-btns>button.ant-btn.ant-btn-primary',
-            'lms.sysu.edu.cn/enrol/index.php?id=': '.continuebutton btn.btn-primary',
+            'lms.sysu.edu.cn/enrol/index.php?id=': '.continuebutton .btn.btn-primary',
             'lms.sysu.edu.cn': '.loginBtn',
             'portal.sysu.edu.cn/newClient/#/login': '.index-loginData-XCumn>button.ant-btn.index-submit-3jXSy',
             'pay.sysu.edu.cn': '.el-button.login_btns',
