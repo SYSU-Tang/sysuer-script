@@ -464,7 +464,7 @@
                     }
                 }
                 upload(playerWrapper, playerdata, (progress, totaltime) => {
-                    if (progress == "100") {
+                    if (Number(progress) >= 100) {
                         toast.success('[SYSUER 脚本] 当前视频完成');
                         if (videoJump) {
                             jump();
@@ -483,7 +483,7 @@
                         toast.success('[SYSUER 脚本] 视频进度已全额提交！');
                         if (videoJump) {
                             const test = () => upload(playerWrapper, playerdata, (progress, totaltime) => {
-                                if (progress == "100") {
+                                if (Number(progress) >= 100) {
                                     jump();
                                 } else {
                                     setTimeout(test, 500);
