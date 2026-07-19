@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SYSUER美化辅助增强
 // @namespace    https://github.com/SYSU-Tang
-// @version      1.4
+// @version      1.6
 // @description  中大儿增强脚本，包括网页净化、在线教学平台视频自动速通、自动跳下一页、自动登录、跳过验证、自动跳转登录页。
 // @author       SYSU-Tang
 // @license      Apache-2.0
@@ -37,10 +37,11 @@
         password: GM_getValue('password', ''),
         videoComplete: GM_getValue('videoComplete', true),
         videoJump: GM_getValue('videoJump', true),
-        purify: GM_getValue('purify', true)
+        purify: GM_getValue('purify', true),
+        removeRatermark: GM_getValue('removeRatermark', true)
     };
 
-    const { autoLogin, autoVerify, autoWebvpn, autoJumpLogin, username, password, videoComplete, videoJump, purify } = config;
+    const { autoLogin, autoVerify, autoWebvpn, autoJumpLogin, username, password, videoComplete, videoJump, purify, removeRatermark } = config;
 
     const url = window.location.href;
     const host = window.location.hostname;
@@ -136,6 +137,9 @@
             <label style="display: flex; align-items: center; justify-content: space-between; font-size: 14px; color: #333;">
                 页面净化 <input type="checkbox" id="cfg-purify" ${config.purify ? 'checked' : ''}>
             </label>
+            <label style="display: flex; align-items: center; justify-content: space-between; font-size: 14px; color: #333;">
+                移除水印 <input type="checkbox" id="cfg-removeRatermark" ${config.removeRatermark ? 'checked' : ''}>
+            </label>
 
             <hr style="border: 0; border-top: 1px dashed #ccc; margin: 5px 0;">
 
@@ -173,6 +177,7 @@
             GM_setValue('videoComplete', document.getElementById('cfg-videoComplete').checked);
             GM_setValue('videoJump', document.getElementById('cfg-videoJump').checked);
             GM_setValue('purify', document.getElementById('cfg-purify').checked);
+            GM_setValue('removeRatermark', document.getElementById('cfg-removeRatermark').checked);
             GM_setValue('username', document.getElementById('cfg-username').value);
             GM_setValue('password', document.getElementById('cfg-password').value);
 
@@ -490,6 +495,9 @@
             }
         };
         if (/lms\.sysu\.edu\.cn\/mod\/fsresource\/view\.php/.test(url)) {
+            if (removeWatermark) {
+                watermark.remove()
+            }
             let videoAttempts = 0;
             const videoInterval = setInterval(() => {
                 if ((typeof playerdata !== 'undefined' && typeof TCPlayerWrapper !== 'undefined') || videoAttempts > 10) {
@@ -571,9 +579,9 @@
             });
         });
     }
-
     if (autoLogin && /cas.+?sysu\.edu\.cn\/esc-sso\/login\/page/.test(url) && username && password) {
         login(username, password);
         toast.info('[SYSUER 脚本] 自动登录中');
     }
+
 })();
