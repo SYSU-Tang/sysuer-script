@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SYSUER美化辅助增强
 // @namespace    https://github.com/SYSU-Tang
-// @version      1.2
+// @version      1.3
 // @description  中大儿增强脚本，包括网页净化、在线教学平台视频自动速通、自动跳下一页、自动登录、跳过验证、自动跳转登录页。
 // @author       SYSU-Tang
 // @license      Apache-2.0
@@ -17,6 +17,7 @@
 // @match        *://appgw.sysu.edu.cn/*
 // @match        *://visitor.sysu.edu.cn/*
 // @match        *://visitor-443.webvpn.sysu.edu.cn/*
+// @match        *://pay.sysu.edu.cn/*
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @grant        GM_registerMenuCommand
@@ -501,7 +502,8 @@
             'jwxt.sysu.edu.cn': '.ant-confirm-btns>button.ant-btn.ant-btn-primary',
             'lms.sysu.edu.cn/enrol/index.php?id=': '.continuebutton btn.btn-primary',
             'lms.sysu.edu.cn': '.loginBtn',
-            'portal.sysu.edu.cn/newClient/#/login': '.index-loginData-XCumn>button.ant-btn.index-submit-3jXSy'
+            'portal.sysu.edu.cn/newClient/#/login': '.index-loginData-XCumn>button.ant-btn.index-submit-3jXSy',
+            'pay.sysu.edu.cn': '.el-button.login_btns',
         };
         window.addEventListener('load', function () {
             Object.entries(clickButton).forEach(([key, value]) => {
