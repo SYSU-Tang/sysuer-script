@@ -38,10 +38,10 @@
         videoComplete: GM_getValue('videoComplete', true),
         videoJump: GM_getValue('videoJump', true),
         purify: GM_getValue('purify', true),
-        removeRatermark: GM_getValue('removeRatermark', true)
+        removeWatermark: GM_getValue('removeWatermark', true)
     };
 
-    const { autoLogin, autoVerify, autoWebvpn, autoJumpLogin, username, password, videoComplete, videoJump, purify, removeRatermark } = config;
+    const { autoLogin, autoVerify, autoWebvpn, autoJumpLogin, username, password, videoComplete, videoJump, purify, removeWatermark } = config;
 
     const url = window.location.href;
     const host = window.location.hostname;
@@ -138,7 +138,7 @@
                 页面净化 <input type="checkbox" id="cfg-purify" ${config.purify ? 'checked' : ''}>
             </label>
             <label style="display: flex; align-items: center; justify-content: space-between; font-size: 14px; color: #333;">
-                移除水印 <input type="checkbox" id="cfg-removeRatermark" ${config.removeRatermark ? 'checked' : ''}>
+                移除水印 <input type="checkbox" id="cfg-removeWatermark" ${config.removeWatermark ? 'checked' : ''}>
             </label>
 
             <hr style="border: 0; border-top: 1px dashed #ccc; margin: 5px 0;">
@@ -177,7 +177,7 @@
             GM_setValue('videoComplete', document.getElementById('cfg-videoComplete').checked);
             GM_setValue('videoJump', document.getElementById('cfg-videoJump').checked);
             GM_setValue('purify', document.getElementById('cfg-purify').checked);
-            GM_setValue('removeRatermark', document.getElementById('cfg-removeRatermark').checked);
+            GM_setValue('removeWatermark', document.getElementById('cfg-removeWatermark').checked);
             GM_setValue('username', document.getElementById('cfg-username').value);
             GM_setValue('password', document.getElementById('cfg-password').value);
 
@@ -495,7 +495,7 @@
             }
         };
         if (/lms\.sysu\.edu\.cn\/mod\/fsresource\/view\.php/.test(url)) {
-            if (removeWatermark) {
+            if (removeWatermark && watermark) {
                 watermark.remove()
             }
             let videoAttempts = 0;
