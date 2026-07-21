@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SYSUER美化辅助增强
 // @namespace    https://github.com/SYSU-Tang
-// @version      1.6
+// @version      1.7
 // @description  中大儿增强脚本，包括网页净化、在线教学平台视频自动速通、自动跳下一页、自动登录、跳过验证、自动跳转登录页。
 // @author       SYSU-Tang
 // @license      Apache-2.0
@@ -11,7 +11,6 @@
 // @match        *://www.sysu.edu.cn/*
 // @match        *://jwxt.sysu.edu.cn/*
 // @match        *://portal.sysu.edu.cn/*
-// @match        *://cas.sysu.edu.cn/esc-sso/login/page
 // @match        *://lms.sysu.edu.cn/*
 // @match        *://cas.sysu.edu.cn/*
 // @match        *://appgw.sysu.edu.cn/*
@@ -382,6 +381,7 @@
                 click('.ant-notification-notice-close-x');
             }
         };
+        purifyJwxt();
         window.addEventListener('load', () => {
             purifyJwxt();
             toast.info('[SYSUER 脚本] 净化页面');
@@ -568,7 +568,7 @@
             'portal.sysu.edu.cn/newClient/#/login': '.index-loginData-XCumn>button.ant-btn.index-submit-3jXSy',
             'pay.sysu.edu.cn': '.el-button.login_btns',
         };
-        window.addEventListener('load', function () {
+        const autoJump = () => {
             Object.entries(clickButton).forEach(([key, value]) => {
                 if (url.includes(key)) {
                     waitElement(value, e => {
@@ -577,7 +577,9 @@
                     });
                 }
             });
-        });
+        }
+        autoJump();
+        window.addEventListener('load', autoJump);
     }
     if (autoLogin && /cas.+?sysu\.edu\.cn\/esc-sso\/login\/page/.test(url) && username && password) {
         login(username, password);
