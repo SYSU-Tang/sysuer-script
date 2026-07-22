@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SYSUER美化辅助增强
 // @namespace    https://github.com/SYSU-Tang
-// @version      1.7
+// @version      1.8
 // @description  中大儿增强脚本，包括网页净化、在线教学平台视频自动速通、自动跳下一页、自动登录、跳过验证、自动跳转登录页。
 // @author       SYSU-Tang
 // @license      Apache-2.0
@@ -17,6 +17,8 @@
 // @match        *://visitor.sysu.edu.cn/*
 // @match        *://visitor-443.webvpn.sysu.edu.cn/*
 // @match        *://pay.sysu.edu.cn/*
+// @match        *://xgxt.sysu.edu.cn/*
+// @match        *://xgxt-443.webvpn.sysu.edu.cn/*
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @grant        GM_registerMenuCommand
@@ -344,50 +346,60 @@
         window.toast.info = (msg, options) => showToast(msg, { ...options, type: 'info' });
     })();
 
-    if (purify && host === 'www.sysu.edu.cn') {
-        hide(['.ftb']);
-    }
-    if (purify && host === 'jwxt.sysu.edu.cn') {
-        const purifyJwxt = () => {
-            hide(['.sys-header', '.sys-footer', '.ant-breadcrumb']);
-            if (url.includes('/jwxt/mk/')) {
-                const stuCon = document.querySelector('.stu-con');
-                if (stuCon) stuCon.style.padding = '0px';
-            }
-            if (url.includes('jwxt/mk/#/personalTrainingProgramView')) {
-                hide(['.ant-tabs-bar']);
-                document.querySelectorAll('col').forEach(element => { element.style.minWidth = "0px"; });
-                const stuCon = document.querySelector('.stu-con');
-                if (stuCon) stuCon.style.padding = '0px';
-            }
-            if (url.includes('jwxt/#/student')) {
-                hide(['.sys-header', '.sys-footer']);
-                waitElement('.invest2', content => { content.style.display = 'none'; });
-                const content = document.querySelector('.ant-layout-content');
-                if (content) content.style.paddingTop = '0px';
-                waitElement('col', content => {
+    if (purify) {
+        if (host === 'www.sysu.edu.cn') {
+            hide(['.ftb']);
+        }
+        if (host === 'lms.sysu.edu.cn') {
+            document.querySelectorAll(".editButton").forEach(e => e.style.display = 'none');
+            hide(['footer']);
+        }
+        if (host === 'xgxt.sysu.edu.cn' || host === 'xgxt-443.webvpn.sysu.edu.cn') {
+            hide(['.banner-ca39d', 'footer']);
+            waitElement('.wrap-e806d', content => { content.style.backgroundSize = '0px'; });
+            waitElement('.scrollbars-22121', content => { content.style.height = '100%'; });
+        }
+        if (host === 'jwxt.sysu.edu.cn') {
+            const purifyJwxt = () => {
+                hide(['.sys-header', '.sys-footer', '.ant-breadcrumb']);
+                if (url.includes('/jwxt/mk/')) {
+                    const stuCon = document.querySelector('.stu-con');
+                    if (stuCon) stuCon.style.padding = '0px';
+                }
+                if (url.includes('jwxt/mk/#/personalTrainingProgramView')) {
+                    hide(['.ant-tabs-bar']);
                     document.querySelectorAll('col').forEach(element => { element.style.minWidth = "0px"; });
-                });
-            }
-            if (url.includes('jwxt/mk/studentWeb/#/stuAchievementView') || url.includes('jwxt/mk/gradua/#/completionstatusStu')) {
-                waitElement('.cj-yxsh-con.cj-cx', content => { content.style.width = '100%'; content.style.margin = '0px'; });
-            }
-            if (url.includes('#/notice/')) {
-                waitElement('main', content => { content.style.padding = '0px'; });
-                waitElement('.style-bread-3mo7c', content => { content.style.maxWidth = '100%'; });
-                waitElement('.style-wrapper-3Oy8W', content => { content.style.maxWidth = '100%'; });
-            }
-            if (url.includes('/jwxt/mk/courseSelection')) {
-                click('.ant-notification-notice-close-x');
-            }
-        };
-        purifyJwxt();
-        window.addEventListener('load', () => {
+                    const stuCon = document.querySelector('.stu-con');
+                    if (stuCon) stuCon.style.padding = '0px';
+                }
+                if (url.includes('jwxt/#/student')) {
+                    hide(['.sys-header', '.sys-footer']);
+                    waitElement('.invest2', content => { content.style.display = 'none'; });
+                    const content = document.querySelector('.ant-layout-content');
+                    if (content) content.style.paddingTop = '0px';
+                    waitElement('col', content => {
+                        document.querySelectorAll('col').forEach(element => { element.style.minWidth = "0px"; });
+                    });
+                }
+                if (url.includes('jwxt/mk/studentWeb/#/stuAchievementView') || url.includes('jwxt/mk/gradua/#/completionstatusStu')) {
+                    waitElement('.cj-yxsh-con.cj-cx', content => { content.style.width = '100%'; content.style.margin = '0px'; });
+                }
+                if (url.includes('#/notice/')) {
+                    waitElement('main', content => { content.style.padding = '0px'; });
+                    waitElement('.style-bread-3mo7c', content => { content.style.maxWidth = '100%'; });
+                    waitElement('.style-wrapper-3Oy8W', content => { content.style.maxWidth = '100%'; });
+                }
+                if (url.includes('/jwxt/mk/courseSelection')) {
+                    click('.ant-notification-notice-close-x');
+                }
+            };
             purifyJwxt();
-            toast.info('[SYSUER 脚本] 净化页面');
-        });
+            window.addEventListener('load', () => {
+                purifyJwxt();
+                toast.info('[SYSUER 脚本] 净化页面');
+            });
+        }
     }
-
     if (videoComplete && /lms\.sysu\.edu\.cn\/mod\/.*?\/view\.php/.test(url)) {
         let retry = 0;
         function upload(playerWrapper, playerdata, callback) {
@@ -562,7 +574,7 @@
         }
         const clickButton = {
             'jwxt.sysu.edu.cn/jwxt/#/login': 'button.ant-btn.ant-btn-primary',
-            'jwxt.sysu.edu.cn': '.ant-confirm-btns>button.ant-btn.ant-btn-primary',
+            'jwxt.sysu.edu.cn': 'button.ant-btn.ant-btn-primary',
             'lms.sysu.edu.cn/enrol/index.php?id=': '.continuebutton .btn.btn-primary',
             'lms.sysu.edu.cn': '.loginBtn',
             'portal.sysu.edu.cn/newClient/#/login': '.index-loginData-XCumn>button.ant-btn.index-submit-3jXSy',
